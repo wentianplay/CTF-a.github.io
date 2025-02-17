@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>文天玩初级CTF训练平台</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        .challenge {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-left: 4px solid #3498db;
+        }
+        .solved {
+            border-color: #2ecc71;
+            background: #f8fff9;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input {
+            padding: 8px;
+            width: 300px;
+            margin-right: 10px;
+        }
+        .score {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="score">得分: <span id="score">0</span></div>
+    <h1>文天玩初级CTF训练平台</h1>
+    
+    <div class="challenge" id="challenge1">
+        <h3>题目1: 隐藏的秘密</h3>
+        <p>在网页中找到隐藏的flag（提示：查看源代码）</p>
+        <input type="text" placeholder="输入flag">
+        <button onclick="checkFlag(1)">提交</button>
+    </div>
+
+    <div class="challenge" id="challenge2">
+        <h3>题目2: 基础编码</h3>
+        <p>解码这个Base64字符串：V1Qwe0NURl9QbGF5ZXJfQjRyIX0=</p>
+        <input type="text" placeholder="输入flag">
+        <button onclick="checkFlag(2)">提交</button>
+    </div>
+
+    <div class="challenge" id="challenge3">
+        <h3>题目3: 凯撒密码</h3>
+        <p>破解这个移位密码：KhoorZruog!</p>
+        <input type="text" placeholder="输入flag">
+        <button onclick="checkFlag(3)">提交</button>
+    </div>
+
+    <div class="challenge" id="challenge4">
+        <h3>题目4: 摩尔斯电码</h3>
+        <p>解码这段信号：.-- - ..--.- .-- .- -. ..--.- -.-. - ..-.</p>
+        <input type="text" placeholder="输入flag">
+        <button onclick="checkFlag(4)">提交</button>
+    </div>
+
+    <div class="challenge" id="challenge5">
+        <h3>题目5: 哈希破解</h3>
+        <p>破解这个MD5哈希：e10adc3949ba59abbe56e057f20f883e</p>
+        <input type="text" placeholder="输入flag">
+        <button onclick="checkFlag(5)">提交</button>
+    </div>
+
+    <script>
+        let score = localStorage.getItem('ctfScore') || 0;
+        document.getElementById('score').textContent = score;
+
+        const flags = {
+            1: "WT0{Welcome_CTFer!}",
+            2: "WT0{CTF_Player_B4r!}",
+            3: "WT0{Hello_World!}",
+            4: "WT0{WT_WAN_CTF}",
+            5: "WT0{123456}"  // MD5("123456")
+        };
+
+        function checkFlag(challengeId) {
+            const input = document.querySelector(`#challenge${challengeId} input`).value;
+            const challengeDiv = document.getElementById(`challenge${challengeId}`);
+            
+            if(input.trim() === flags[challengeId]) {
+                if(!challengeDiv.classList.contains('solved')) {
+                    score++;
+                    localStorage.setItem('ctfScore', score);
+                    document.getElementById('score').textContent = score;
+                }
+                challengeDiv.classList.add('solved');
+                alert('恭喜！答案正确！');
+            } else {
+                alert('答案错误，请再试一次！');
+            }
+        }
+
+        // 题目1的隐藏flag（页面注释中）
+        // 注释内容：<!-- WT0{Hidden_In_Comments} -->
+    </script>
+
+    <!-- WT0{Hidden_In_Comments} -->
+</body>
+</html>
